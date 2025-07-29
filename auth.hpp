@@ -6,10 +6,12 @@
 #include<unordered_map>
 #include<sstream>
 #include<unordered_set>
+#include <windows.h> 
 using namespace std ;
 inline unordered_map<string , unordered_set<string>> friend_list ;
 inline unordered_map<size_t, string> reverse_hash_map;
 inline  unordered_map<string , unordered_set<string>> graph ;
+void setColor(int colorCode) ;
 void load_user() ;
 void load_friend() ;
 void save_friend() ;

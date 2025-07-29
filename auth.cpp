@@ -2,6 +2,10 @@
 #include<algorithm>
 #include <functional>
 using namespace std ;
+#include <iostream>
+inline void setColor(int colorCode) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colorCode);
+}
  unordered_map<string , string> users ;
  string simpleHash(string pass){
     hash<string> hasher ;
@@ -90,6 +94,7 @@ void add_friend(const string &currusername, const string &friendusername) {
 
     auto& curr_friends = friend_list[currusername];
     if (curr_friends.find(to_string(hashed_friend)) != curr_friends.end()) {
+         setColor(12); 
         cout << friendusername << " is already in your friend list.\n";
         return;
     }
@@ -98,13 +103,16 @@ void add_friend(const string &currusername, const string &friendusername) {
     curr_friends.insert(to_string(hashed_friend));
     friend_list[friendusername].insert(to_string(hashed_curr));
      save_friend();
+      setColor(5); 
     cout << "Friend added successfully.\n";
 }
 
 bool login(string & name ){
     string username , pass ;
+    setColor(10);
     cout<<"Enter Your Username : "; cin>>username ;
     cout<<endl ;
+     setColor(15); 
     cout<<"Enter Your Password : " ; cin>>pass ;
     if(users.count(username) && users[username] == simpleHash(pass)){
         cout << "Login Successful!\n";
@@ -115,6 +123,7 @@ bool login(string & name ){
 
     } 
     else {
+         setColor(10); 
         cout<<"Invalid Username or Password "<<endl ;  
         return false ;
     }
@@ -122,17 +131,21 @@ bool login(string & name ){
 
 void register_user(){
     string user , pass ;
+     setColor(10); 
    cout<<"Choose Username : " ;
    cin>>user ;
    cout<<endl ;
+    setColor(5); 
    cout<<"Choose Password : " ;
    cin>>pass ;
    if(users.count(user)){
+         setColor(12); 
     cout<<" This Username already exist"<<endl ;
    }  
    else {
     users[user] = simpleHash(pass) ;
     save_user(user ,users[user]) ;
+     setColor(10); 
       cout << "Registered Successfully!\n";
 
 
@@ -142,6 +155,7 @@ void register_user(){
 void print_friend_list(const string& username) {
     auto& st = friend_list[username];
     if (st.empty()) {
+        setColor(12);
         cout << "No friends found.\n";
         return;
     }
@@ -191,7 +205,9 @@ void suggest_friend(const string & username){
         cout<<"No Suggested Friend Found "<<endl ;
 
     } else {
+         setColor(15); 
         cout<<"suggested friend for "<< username<< endl ;
+         setColor(5); 
         cout<<"User ------->  Their Mutuals with Other Friends \n" ;
         for(auto [user , mutuals] : suggestions){
             cout<< user <<" ---> "<< mutuals <<endl ;

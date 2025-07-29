@@ -45,7 +45,10 @@ void receive_message(){
         cout<< buffer <<endl ;
     }
 } 
+
+
  int main(int argc , char* argv[]){
+     int defaultColor = 7;
     if(argc != 2){
           cout << "Usage: " << argv[0] << " <server_ip> <name>" << endl;
           return 1 ;
@@ -53,6 +56,7 @@ void receive_message(){
     
     string server_ip = argv[1];
     // client_name = argv[2] ;
+    
       string name_of_client ;
  
      load_user() ;
@@ -60,6 +64,7 @@ void receive_message(){
     int choice ;
     bool isLoggedIn = false;
     while(true){
+        setColor(10); 
         cout<<"1. Register New Account \n2. Login \n3. Exit \n  Enter Your Choice \n" ;
         cin>>choice ;
         // getline.ignore() ;
@@ -73,10 +78,12 @@ void receive_message(){
                 isLoggedIn = true ;
                 while(true){
                 int subchoice ;
+                 setColor(12);
                   cout<<"1. Do You Want To Add Friend \n2. Do You Want To See Suggested Friend List \n3. Enter in Chat Section \n\n  Enter Your Choice \n" ;
                   cin>>subchoice ;
                   cout<<endl ;
                   if(subchoice == 1){
+                      setColor(3);
                     cout<<" Enter Your Friend's username \n" ;
                     string friendusername ;
                     cin>>friendusername ;
@@ -84,10 +91,11 @@ void receive_message(){
 
                   } 
                   else if(subchoice == 2){
-                    
+                      setColor(10);
                     print_friend_list(name_of_client) ;
 
                     cout<<endl ;
+                      setColor(5);
                     suggest_friend(name_of_client) ;
                   } 
                   else {
@@ -118,6 +126,7 @@ if (!isLoggedIn) {
     SSL_CTX* ssl_ctx = create_context() ;
     SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);  
      if (sock == INVALID_SOCKET) {
+        	
         cerr << "Socket creation failed" << endl;
         WSACleanup();
         return 1;
@@ -144,6 +153,7 @@ if (!isLoggedIn) {
         WSACleanup();
         return 1;
    } 
+    setColor(3);
     SSL_write(ssl , client_name.c_str() ,  client_name.size()) ;
     cout<<"Connected to server  as " << client_name <<endl ;
     cout<<"Type /pm <name> message  to send private message " <<endl ;
